@@ -9,18 +9,18 @@ st.write("Tiny app, big discipline. Figure out position size, R-multiples, and t
 
 with st.sidebar:
     st.header("Account & Risk")
-    account_size = st.number_input("Account size ($)", min_value=0.0, value=10000.0, step=100.0, format="%.2f")
-    risk_pct = st.number_input("Risk per trade (%)", min_value=0.0, max_value=100.0, value=1.0, step=0.25)
+    account_size = st.number_input("Account size ($)", min_value=0.0, value=10000.0, step=100.0, format="%.2f", key="acct_size")
+    risk_pct = st.number_input("Risk per trade (%)", min_value=0.0, max_value=100.0, value=1.0, step=0.25, format="%.2f", key="risk_pct")
     max_leverage = st.number_input("Max leverage (optional)", min_value=1.0, value=1.0, step=0.5)
 
     st.header("Trade Setup")
     side = st.selectbox("Side", ["Long", "Short"])
-    entry = st.number_input("Entry price", min_value=0.0, value=100.0, step=0.01, format="%.4f")
+    entry = st.number_input("Entry price", min_value=0.0, value=100.0, step=0.01, format="%.4f",key="entry_price")
     stop = st.number_input("Stop price", min_value=0.0, value=98.0, step=0.01, format="%.4f")
 
     st.header("Frictions (Optional)")
     fee_per_share = st.number_input("Fees per share ($)", min_value=0.0, value=0.0, step=0.001, format="%.4f")
-    slippage_per_share = st.number_input("Slippage per share ($)", min_value=0.0, value=0.0, step=0.001, format="%.4f")
+    slippage_per_share = st.number_input("Slippage per share ($)", min_value=0.0, value=0.0, step=0.001, format="%.4f",key="slippage")
 
     st.header("Targets")
     r_targets = st.text_input("R targets (comma-separated)", value="1, 1.5, 2, 3")
@@ -135,18 +135,18 @@ st.write("Tiny app, big discipline. Figure out position size, R-multiples, and t
 
 with st.sidebar:
     st.header("Account & Risk")
-    account_size = st.number_input("Account size ($)", min_value=0.0, value=10000.0, step=100.0, format="%.2f")
-    risk_pct = st.number_input("Risk per trade (%)", min_value=0.0, max_value=100.0, value=1.0, step=0.25)
+    account_size = st.number_input("Account size ($)", min_value=0.0, value=10000.0, step=100.0, format="%.2f", key="acct_size")
+    risk_pct = st.number_input("Risk per trade (%)", min_value=0.0, max_value=100.0, value=1.0, step=0.25, format="%.2f", key="risk_pct")
     max_leverage = st.number_input("Max leverage (optional)", min_value=1.0, value=1.0, step=0.5)
 
     st.header("Trade Setup")
     side = st.selectbox("Side", ["Long", "Short"])
-    entry = st.number_input("Entry price", min_value=0.0, value=100.0, step=0.01, format="%.4f")
-    stop = st.number_input("Stop price", min_value=0.0, value=98.0, step=0.01, format="%.4f")
+    entry = st.number_input("Entry price", min_value=0.0, value=100.0, step=0.01, format="%.4f", key="entry_price")
+    stop = st.number_input("Stop price", min_value=0.0, value=98.0, step=0.01, format="%.4f",key="stop_price")
 
     st.header("Frictions (Optional)")
-    fee_per_share = st.number_input("Fees per share ($)", min_value=0.0, value=0.0, step=0.001, format="%.4f")
-    slippage_per_share = st.number_input("Slippage per share ($)", min_value=0.0, value=0.0, step=0.001, format="%.4f")
+    fee_per_share = st.number_input("Fees per share ($)", min_value=0.0, value=0.0, step=0.001, format="%.4f", key="fee_per_share")
+    slippage_per_share = st.number_input("Slippage per share ($)", min_value=0.0, value=0.0, step=0.001, format="%.4f", key="slippage")
 
     st.header("Targets")
     r_targets = st.text_input("R targets (comma-separated)", value="1, 1.5, 2, 3")
@@ -233,5 +233,26 @@ with colC:
         st.write(f"Stop at: {(entry + suggested_dist):.4f}")
 
 st.caption("Educational, not financial advice. Size responsibly.")
+st.set_page_config(page_title="Risk/Reward Trade Calculator", page_icon="🧪")
+
+st.markdown(
+    """
+    <div style="padding:14px 18px;border-radius:16px;background:linear-gradient(135deg,#7c3aed33,#06b6d433);border:1px solid #2a2a3a;">
+      <h1 style="margin:0;font-size:1.6rem;">🧪 Risk/Reward Position Sizing</h1>
+      <p style="margin:6px 0 0;color:#b9b9c9;">Trade like you meant it, not like you guessed.</p>
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
+
+with st.sidebar:
+    st.header("Account & Risk")
+    account_size = st.number_input("Account size ($)", min_value=0.0, value=10000.0, step=100.0, format="%^.2", key="acct_size")
+st.number_input
+
+
+
+
+
 
 
