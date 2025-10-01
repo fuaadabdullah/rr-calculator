@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rizzk"
+version = "0.1.0"
+description = "Rizzk Trading Terminal"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = []
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+warn_unused_ignores = true
+exclude = ["data/", "build/"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+select = ["E","F","I","UP","B"]
