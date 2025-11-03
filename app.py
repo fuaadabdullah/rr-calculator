@@ -183,6 +183,8 @@ try:
 
     st.caption("Example numbers. Tune to your own playbook.")
 
+    st.markdown("### 🦇 Risk-Reward Calculator")
+
     with st.form("rizzk_form"):
         # Add position type selector
         position_type = st.selectbox("Position Type", ["Long", "Short"], index=0)
