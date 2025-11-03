@@ -109,7 +109,7 @@ st.markdown("""
 
     /* Form styling */
     .stForm {
-        background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
         padding: 2rem;
         border-radius: 1rem;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -177,7 +177,7 @@ try:
 
     st.caption("Example numbers. Tune to your own playbook.")
 
-    col_left, col_right = st.columns([1, 1.5])
+    col_left, col_right = st.columns(2)
 
     with col_left:
         with st.form("rizzk_form"):
