@@ -37,124 +37,180 @@ if edgy_default is None:
 
 st.markdown("""
 <style>
-    /* Enhanced Graphic Design */
+    :root {
+        --bg-primary: #05070a;
+        --bg-panel: rgba(14, 18, 26, 0.85);
+        --bg-panel-alt: rgba(12, 16, 24, 0.95);
+        --accent-teal: #14ffec;
+        --accent-magenta: #ff6ec7;
+        --accent-amber: #ffc23c;
+        --text-primary: #f1f5f9;
+        --text-secondary: #94a3b8;
+        --border-soft: rgba(20, 255, 236, 0.25);
+        --shadow-soft: 0 20px 40px rgba(0, 0, 0, 0.45);
+    }
+
+    .stApp {
+        background: radial-gradient(circle at top right, rgba(20, 255, 236, 0.08), transparent 45%), var(--bg-primary);
+        color: var(--text-primary);
+    }
+
+    [data-testid="stSidebar"] {
+        background: linear-gradient(180deg, rgba(10, 13, 20, 0.95) 0%, rgba(5, 7, 10, 0.95) 100%);
+        border-right: 1px solid rgba(20, 255, 236, 0.08);
+        backdrop-filter: blur(12px);
+    }
+
+    [data-testid="stMetricValue"], [data-testid="stMetricLabel"] {
+        color: var(--text-primary) !important;
+    }
+
+    /* Elevated typography */
     .main-header {
-        font-size: 3rem;
-        background: linear-gradient(45deg, #FFD700, #FFA500);
+        font-size: 3.1rem;
+        background: linear-gradient(90deg, var(--accent-teal), var(--accent-magenta));
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
         text-align: center;
-        margin-bottom: 1rem;
-        font-weight: bold;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        letter-spacing: 0.1em;
+        margin-bottom: 0.75rem;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
     }
     .sub-header {
-        font-size: 1.2rem;
-        color: #666;
+        font-size: 1.05rem;
+        color: var(--text-secondary);
         text-align: center;
-        margin-bottom: 2rem;
-        letter-spacing: 0.05em;
-        font-style: italic;
+        margin-bottom: 2.5rem;
+        letter-spacing: 0.08em;
+        font-style: normal;
+        text-transform: uppercase;
     }
 
-    /* Enhanced metric cards with gradients */
+    /* Metric and panel treatments */
     .metric-card {
-        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-        padding: 1.5rem;
+        background: var(--bg-panel-alt);
+        padding: 1.4rem;
         border-radius: 1rem;
         text-align: center;
-        margin: 0.5rem;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        border: 1px solid #dee2e6;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        margin: 0.6rem;
+        border: 1px solid rgba(20, 255, 236, 0.08);
+        box-shadow: var(--shadow-soft);
+        transition: transform 0.25s ease, border 0.25s ease, box-shadow 0.25s ease;
     }
     .metric-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        transform: translateY(-3px);
+        border: 1px solid var(--accent-teal);
+        box-shadow: 0 28px 40px rgba(20, 255, 236, 0.12);
     }
 
-    /* Success message with better styling */
     .success-msg {
-        background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
-        color: #155724;
+        background: linear-gradient(135deg, rgba(20, 255, 236, 0.12), rgba(255, 110, 199, 0.12));
+        color: var(--accent-teal);
         padding: 1rem;
-        border-radius: 0.5rem;
+        border-radius: 0.75rem;
         margin: 1.5rem 0;
-        border-left: 4px solid #28a745;
-        font-weight: bold;
+        border: 1px solid rgba(20, 255, 236, 0.35);
+        font-weight: 600;
         text-align: center;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        box-shadow: var(--shadow-soft);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
     }
 
-    /* Enhanced buttons */
     .stButton>button[data-testid="stBaseButton-primary"] {
-        background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%) !important;
-        color: #000 !important;
+        background: linear-gradient(135deg, var(--accent-teal), var(--accent-magenta)) !important;
+        color: #05070a !important;
         border: none !important;
-        border-radius: 0.5rem !important;
-        padding: 0.75rem 2rem !important;
-        font-weight: bold !important;
-        font-size: 1rem !important;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2) !important;
-        transition: all 0.3s ease !important;
+        border-radius: 0.6rem !important;
+        padding: 0.85rem 2.2rem !important;
+        font-weight: 700 !important;
+        font-size: 1.05rem !important;
+        box-shadow: 0 18px 32px rgba(20, 255, 236, 0.18) !important;
+        transition: all 0.25s ease !important;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
     }
     .stButton>button[data-testid="stBaseButton-primary"]:hover {
-        background: linear-gradient(135deg, #FFC107 0%, #FF8C00 100%) !important;
-        color: #000 !important;
+        filter: brightness(1.05) !important;
         transform: translateY(-2px) !important;
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3) !important;
+        box-shadow: 0 24px 36px rgba(255, 110, 199, 0.22) !important;
     }
 
-    /* Form styling */
     .form-container {
-        background: #f0f0f0;
+        background: var(--bg-panel);
         padding: 2rem;
-        border-radius: 1rem;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        border: 2px solid #2196f3;
-        color: black !important;
+        border-radius: 1.2rem;
+        box-shadow: var(--shadow-soft);
+        border: 1px solid var(--border-soft);
+        color: var(--text-primary) !important;
+        backdrop-filter: blur(10px);
     }
 
-    /* Force label color */
     .form-container .stText, .form-container label {
-        color: black !important;
+        color: var(--text-primary) !important;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        letter-spacing: 0.08em;
     }
 
-    /* Input field styling */
     .stNumberInput input, .stSelectbox select, .stRadio div {
-        border-radius: 0.5rem !important;
-        border: 2px solid #dee2e6 !important;
-        padding: 0.5rem !important;
-        transition: border-color 0.3s ease !important;
+        border-radius: 0.65rem !important;
+        border: 1px solid rgba(148, 163, 184, 0.35) !important;
+        padding: 0.6rem !important;
+        background: rgba(9, 12, 18, 0.85) !important;
+        color: var(--text-primary) !important;
     }
     .stNumberInput input:focus, .stSelectbox select:focus {
-        border-color: #FFD700 !important;
-        box-shadow: 0 0 0 0.2rem rgba(255, 215, 0, 0.25) !important;
+        border-color: var(--accent-teal) !important;
+        box-shadow: 0 0 0 0.25rem rgba(20, 255, 236, 0.2) !important;
     }
 
-    /* Section headers */
     h3 {
-        color: #333;
-        border-bottom: 2px solid #FFD700;
-        padding-bottom: 0.5rem;
-        margin-bottom: 1rem;
+        color: var(--accent-teal);
+        border-bottom: 2px solid rgba(20, 255, 236, 0.25);
+        padding-bottom: 0.4rem;
+        margin-bottom: 1.25rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
     }
 
-    /* History expander styling */
     .streamlit-expanderHeader {
-        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%) !important;
-        border-radius: 0.5rem !important;
-        border: 1px solid #dee2e6 !important;
-        font-weight: bold !important;
+        background: rgba(12, 16, 24, 0.92) !important;
+        border-radius: 0.75rem !important;
+        border: 1px solid rgba(20, 255, 236, 0.12) !important;
+        font-weight: 600 !important;
+        color: var(--text-primary) !important;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
     }
 
-    /* Chart styling */
     .stPlotlyChart {
         border-radius: 1rem;
         overflow: hidden;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        box-shadow: var(--shadow-soft);
+        background: rgba(8, 11, 18, 0.9);
+        border: 1px solid rgba(20, 255, 236, 0.1);
+    }
+
+    .info-box {
+        background: rgba(255, 194, 60, 0.12);
+        border: 1px solid rgba(255, 194, 60, 0.4);
+        color: var(--accent-amber);
+        padding: 0.85rem 1.1rem;
+        border-radius: 0.75rem;
+        margin-bottom: 1.4rem;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+    }
+
+    .stRadio > div {
+        background: rgba(9, 12, 18, 0.65);
+        border-radius: 0.75rem;
+        padding: 0.35rem;
+        border: 1px solid rgba(148, 163, 184, 0.2);
     }
 </style>
 """, unsafe_allow_html=True)
@@ -181,9 +237,17 @@ try:
         st.markdown(f'<h1 class="main-header">RIZZK Calculator {emoji.emojize(":rocket:")}</h1>', unsafe_allow_html=True)
     st.markdown('<p class="sub-header">Refined risk. Raw edge. Position sizing for traders who know their RIZZ.</p>', unsafe_allow_html=True)
 
-    st.caption("Example numbers. Tune to your own playbook.")
+    # Small helper note styled as an inline info box
+    st.markdown(
+        '<div class="info-box">Example numbers. Tune to your own playbook.</div>',
+        unsafe_allow_html=True,
+    )
 
-    st.markdown("### 🦇 Risk-Reward Calculator")
+    # Section title stays on-theme: bat only in edgy mode
+    if 'edgy_mode' in globals() and edgy_mode:
+        st.markdown("### 🦇 Risk-Reward Calculator")
+    else:
+        st.markdown("### Risk-Reward Calculator")
 
     st.markdown('<div class="form-container">', unsafe_allow_html=True)
     with st.form("rizzk_form"):
@@ -203,8 +267,42 @@ try:
                 risk_amount_input = st.number_input("Risk Amount ($)", min_value=0.0, value=100.0, step=10.0, help="Fixed dollar amount to risk per trade")
 
         with col2:
-            entry_price = st.number_input("Entry Price ($)", min_value=0.0, value=100.0, step=0.1, help="Price at which you plan to enter the trade")
-            stop_loss = st.number_input("Stop Loss Price ($)", min_value=0.0, value=95.0, step=0.1, help="Price at which you will exit if the trade goes against you")
+            entry_price = st.number_input(
+                "Entry Price ($)",
+                min_value=0.0,
+                value=100.0,
+                step=0.1,
+                help="Price at which you plan to enter the trade",
+            )
+
+            # Dynamic stop-loss labeling and constraints to make intent clear
+            epsilon = max(entry_price * 1e-6, 1e-9)
+            if position_type == "Long":
+                stop_label = "💥 Stop Loss Price ($)"
+                stop_help = "For Longs: stop must be BELOW entry."
+                stop_max = max(0.0, entry_price - epsilon)
+                # Choose a sensible default that respects the constraint
+                default_stop = stop_max - 0.01 if stop_max >= 0.02 else max(0.0, entry_price * 0.5)
+                stop_loss = st.number_input(
+                    stop_label,
+                    min_value=0.0,
+                    max_value=float(stop_max),
+                    value=float(default_stop),
+                    step=0.1,
+                    help=stop_help,
+                )
+            else:
+                stop_label = "💥 Stop Loss Price ($)"
+                stop_help = "For Shorts: stop must be ABOVE entry."
+                stop_min = float(entry_price + epsilon)
+                default_stop = max(stop_min + 0.01, entry_price + 0.01)
+                stop_loss = st.number_input(
+                    stop_label,
+                    min_value=float(stop_min),
+                    value=float(default_stop),
+                    step=0.1,
+                    help=stop_help,
+                )
 
         submitted = st.form_submit_button("Calculate", type="primary")
     st.markdown('</div>', unsafe_allow_html=True)
@@ -268,7 +366,7 @@ try:
                 'Scenario': ['Risk', '1:1 Profit', '2:1 Profit'],
                 'Amount': [risk_amount, abs(profit_1_1 - entry_price) * position_size, abs(profit_2_1 - entry_price) * position_size]
             })
-            fig = px.bar(chart_data, x='Scenario', y='Amount', color_discrete_sequence=['#FFD700', '#FFD700', '#FFD700'])
+            fig = px.bar(chart_data, x='Scenario', y='Amount', color_discrete_sequence=['#14ffec', '#ff6ec7', '#ffc23c'])
             st.plotly_chart(fig, use_container_width=True)
 
             # Export results
