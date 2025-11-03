@@ -2,8 +2,10 @@
 
 RIZZK Calculator (pronounced "Rizz-k") — sharp, refined position-sizing for traders who think in probabilities and move with style.
 
-Author: Fuaad  
+Author: Fuaad Abdullah  
 Contact: [GoblinOSRep@gmail.com](mailto:GoblinOSRep@gmail.com)
+
+Default UI: Polished emoji mode is the default. Use the sidebar "🦇 mode (ASCII emoticons)" toggle to switch to the ASCII-emoticon experience.
 
 ## Live Demo
 
@@ -13,7 +15,7 @@ Contact: [GoblinOSRep@gmail.com](mailto:GoblinOSRep@gmail.com)
 
 ## What this is
 
-- Edgy, polished Streamlit app to compute position size, stop-loss impact, and profit targets. Built for traders who want clean numbers without the fluff.
+- 🦇, polished Streamlit app to compute position size, stop-loss impact, and profit targets. Built for traders who want clean numbers without the fluff.
 
 ## Who this is for
 

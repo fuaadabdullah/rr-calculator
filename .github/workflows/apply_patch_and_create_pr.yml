@@ -1,0 +1,90 @@
+name: Apply patch and create PR
+
+on:
+  workflow_dispatch:
+
+jobs:
+  apply-and-pr:
+    runs-on: ubuntu-latest
+    env:
+      BRANCH: feature/edgy-default-env
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run tests
+        run: |
+          pytest -q
+
+      - name: Create branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin main
+          git checkout -b ${BRANCH} origin/main
+
+      - name: Apply inline edits
+        id: apply
+        run: |
+          # Update app.py: insert env/st.secrets parsing and switch checkbox default
+          python - <<'PY'
+import io,sys
+from pathlib import Path
+p=Path('app.py')
+text=p.read_text()
+if "EDGY_MODE_DEFAULT" not in text:
+    # insert import os after emoji import
+    text=text.replace("import emoji\nfrom rizzk_core", "import emoji\nimport os\nfrom rizzk_core")
+    # insert helper and parsing just after set_page_config
+    text=text.replace("st.set_page_config(page_title=\"RIZZK Calculator\", page_icon=emoji.emojize(\":rocket:\"), layout=\"wide\")\n",
+                      "st.set_page_config(page_title=\"RIZZK Calculator\", page_icon=emoji.emojize(\":rocket:\"), layout=\"wide\")\n\n# Helper to parse boolean-like env / secret values\ndef _parse_bool(s):\n    if s is None:\n        return None\n    if isinstance(s, bool):\n        return s\n    s = str(s).strip().lower()\n    if s in (\"1\", \"true\", \"t\", \"yes\", \"y\", \"on\"):\n        return True\n    if s in (\"0\", \"false\", \"f\", \"no\", \"n\", \"off\"):\n        return False\n    return None\n\n# Determine default for Edgy mode (priority: st.secrets -> env var -> fallback False)\nedgy_default = None\nif hasattr(st, \"secrets\"):\n    try:\n        edgy_default = st.secrets.get('EDGY_MODE_DEFAULT')\n    except Exception:\n        edgy_default = None\n\nif edgy_default is None:\n    edgy_default = os.environ.get('EDGY_MODE_DEFAULT')\n\nedgy_default = _parse_bool(edgy_default)\nif edgy_default is None:\n    edgy_default = False\n")
+    # replace the checkbox default use
+    text=text.replace('edgy_mode = st.checkbox("Edgy mode (ASCII emoticons)", value=False, help="Toggle ASCII emoticons vs polished emoji UI")',
+                      'edgy_mode = st.checkbox("Edgy mode (ASCII emoticons)", value=edgy_default, help="Toggle ASCII emoticons vs polished emoji UI")')
+    p.write_text(text)
+    print('app.py modified')
+else:
+    print('app.py already contains EDGY_MODE_DEFAULT, skipping')
+PY
+
+          # Update Dockerfile to respect $PORT
+          df=Path('Dockerfile')
+          dtext=df.read_text()
+          if 'ENV PORT' not in dtext:
+              dtext=dtext.replace('EXPOSE 8501\n\n# Run the Streamlit app\nCMD ["streamlit", "run", "app.py", "--server.port", "8501", "--server.address", "0.0.0.0"]',
+                                  'ENV PORT=8501\nEXPOSE ${PORT}\n\n# Run the Streamlit app on the configured $PORT and bind to all interfaces\nCMD ["bash","-lc","streamlit run app.py --server.port $PORT --server.address 0.0.0.0"]')
+              df.write_text(dtext)
+              print('Dockerfile modified')
+          else:
+              print('Dockerfile already modified, skipping')
+
+          git add app.py Dockerfile || true
+          git commit -m "Make Edgy mode default configurable via EDGY_MODE_DEFAULT env/st.secrets; make Dockerfile respect $PORT" || echo 'No changes to commit'
+
+      - name: Push branch
+        env:
+          GITHUB_TOKEN: ${{ secrets.AUTO_PR_TOKEN }}
+        run: |
+          # Push using the provided PAT secret
+          git push https://x-access-token:${{ secrets.AUTO_PR_TOKEN }}@github.com/${{ github.repository }} ${BRANCH}
+
+      - name: Create Pull Request
+        env:
+          GITHUB_TOKEN: ${{ secrets.AUTO_PR_TOKEN }}
+        run: |
+          set -e
+          PR_TITLE="Make 🦇 mode default configurable (EDGY_MODE_DEFAULT)"
+          PR_BODY="This PR makes the default for the sidebar '🦇 mode' configurable via an environment variable or Streamlit secret named EDGY_MODE_DEFAULT, and makes the Dockerfile respect a configurable PORT. Automated by workflow."
+          API_URL="https://api.github.com/repos/${{ github.repository }}/pulls"
+          JSON=$(jq -n --arg title "$PR_TITLE" --arg head "${BRANCH}" --arg base "main" --arg body "$PR_BODY" '{title:$title, head:$head, base:$base, body:$body}')
+          curl -s -X POST -H "Authorization: token ${{ secrets.AUTO_PR_TOKEN }}" -H "Accept: application/vnd.github.v3+json" $API_URL -d "$JSON" | jq .url
