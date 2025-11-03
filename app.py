@@ -177,35 +177,31 @@ try:
 
     st.caption("Example numbers. Tune to your own playbook.")
 
-    st.write("Debug: About to create columns")  # Debug
+    st.write("Debug: About to create form")  # Debug
 
-    col_left, col_right = st.columns(2)
+    with st.form("rizzk_form"):
+        # Add position type selector
+        position_type = st.selectbox("Position Type", ["Long", "Short"], index=0)
 
-    with col_left:
-        with st.form("rizzk_form"):
-            # Add position type selector
-            position_type = st.selectbox("Position Type", ["Long", "Short"], index=0)
+        # Risk mode toggle
+        risk_mode = st.radio("Risk Mode", ["% of Account", "Fixed $ Amount"], index=0, horizontal=True)
 
-            # Risk mode toggle
-            risk_mode = st.radio("Risk Mode", ["% of Account", "Fixed $ Amount"], index=0, horizontal=True)
+        col1, col2 = st.columns(2)
 
-            col1, col2 = st.columns(2)
+        with col1:
+            account_size = st.number_input("Account Size ($)", min_value=0.0, value=10000.0, step=100.0, help="Total trading account balance")
+            if risk_mode == "% of Account":
+                risk_percentage = st.number_input("Risk Percentage (%)", min_value=0.0, max_value=100.0, value=1.0, step=0.1, help="Percentage of account to risk per trade")
+            else:
+                risk_amount_input = st.number_input("Risk Amount ($)", min_value=0.0, value=100.0, step=10.0, help="Fixed dollar amount to risk per trade")
 
-            with col1:
-                account_size = st.number_input("Account Size ($)", min_value=0.0, value=10000.0, step=100.0, help="Total trading account balance")
-                if risk_mode == "% of Account":
-                    risk_percentage = st.number_input("Risk Percentage (%)", min_value=0.0, max_value=100.0, value=1.0, step=0.1, help="Percentage of account to risk per trade")
-                else:
-                    risk_amount_input = st.number_input("Risk Amount ($)", min_value=0.0, value=100.0, step=10.0, help="Fixed dollar amount to risk per trade")
+        with col2:
+            entry_price = st.number_input("Entry Price ($)", min_value=0.0, value=100.0, step=0.1, help="Price at which you plan to enter the trade")
+            stop_loss = st.number_input("Stop Loss Price ($)", min_value=0.0, value=95.0, step=0.1, help="Price at which you will exit if the trade goes against you")
 
-            with col2:
-                entry_price = st.number_input("Entry Price ($)", min_value=0.0, value=100.0, step=0.1, help="Price at which you plan to enter the trade")
-                stop_loss = st.number_input("Stop Loss Price ($)", min_value=0.0, value=95.0, step=0.1, help="Price at which you will exit if the trade goes against you")
+        submitted = st.form_submit_button("Calculate", type="primary")
 
-            submitted = st.form_submit_button("Calculate", type="primary")
-
-    with col_right:
-        if submitted:
+    if submitted:
             # Input validation
             if account_size <= 0:
                 st.error("Account size must be greater than 0.")
@@ -290,13 +286,13 @@ try:
                 'profit_2_1': profit_2_1
             }
             st.session_state.history.append(calc)
-        else:
-            st.markdown("### Results Preview")
-            st.markdown("Fill the form on the left and hit Calculate to see your position sizing, risk metrics, and percentage moves here.")
-            st.markdown("---")
-            st.markdown(f"** {emoji.emojize(':fire:')} Key Metrics** will show: Position Size, Dollar Risk, Profit Targets, R:R Ratio")
-            st.markdown("** Percentage Moves** will display: % Drop to Stop, % Move to 1:1 Target")
-            st.markdown("** Risk/Reward Chart** will visualize the scenarios")
+    else:
+        st.markdown("### Results Preview")
+        st.markdown("Fill the form on the left and hit Calculate to see your position sizing, risk metrics, and percentage moves here.")
+        st.markdown("---")
+        st.markdown(f"** {emoji.emojize(':fire:')} Key Metrics** will show: Position Size, Dollar Risk, Profit Targets, R:R Ratio")
+        st.markdown("** Percentage Moves** will display: % Drop to Stop, % Move to 1:1 Target")
+        st.markdown("** Risk/Reward Chart** will visualize the scenarios")
 
     st.markdown("---")
     st.header(f"{emoji.emojize(':brain:')} Calculation History")
