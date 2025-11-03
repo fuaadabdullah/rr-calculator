@@ -114,6 +114,12 @@ st.markdown("""
         border-radius: 1rem;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         border: 2px solid #2196f3;
+        color: black !important;
+    }
+
+    /* Force label color */
+    .stForm .stText, .stForm label {
+        color: black !important;
     }
 
     /* Input field styling */
