@@ -109,11 +109,11 @@ st.markdown("""
 
     /* Form styling */
     .stForm {
-        background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+        background: #f0f0f0;
         padding: 2rem;
         border-radius: 1rem;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        border: 1px solid #2196f3;
+        border: 2px solid #2196f3;
     }
 
     /* Input field styling */
@@ -176,8 +176,6 @@ try:
     st.markdown('<p class="sub-header">Refined risk. Raw edge. Position sizing for traders who know their RIZZ.</p>', unsafe_allow_html=True)
 
     st.caption("Example numbers. Tune to your own playbook.")
-
-    st.write("Debug: About to create form")  # Debug
 
     with st.form("rizzk_form"):
         # Add position type selector
