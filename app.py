@@ -182,30 +182,23 @@ try:
     with col_left:
         with st.form("rizzk_form"):
             # Add position type selector
-            position_label = "(ง'̀-'́)ง Position Type" if edgy_mode else "Position Type"
-            position_type = st.selectbox(position_label, ["Long", "Short"], index=0)
+            position_type = st.selectbox("Position Type", ["Long", "Short"], index=0)
 
             # Risk mode toggle
-            risk_label = "(⊙_⊙) Risk Mode" if edgy_mode else "Risk Mode"
-            risk_mode = st.radio(risk_label, ["% of Account", "Fixed $ Amount"], index=0, horizontal=True)
+            risk_mode = st.radio("Risk Mode", ["% of Account", "Fixed $ Amount"], index=0, horizontal=True)
 
             col1, col2 = st.columns(2)
 
             with col1:
-                account_label = "[̲̅$̲̅(̲̅ ͡° ͜ʖ ͡°̲̅)̲̅$̲̅] Account Size ($)" if edgy_mode else "Account Size ($)"
-                account_size = st.number_input(account_label, min_value=0.0, value=10000.0, step=100.0, help="Total trading account balance")
+                account_size = st.number_input("Account Size ($)", min_value=0.0, value=10000.0, step=100.0, help="Total trading account balance")
                 if risk_mode == "% of Account":
-                    risk_pct_label = "(ಠ_ಠ) Risk Percentage (%)" if edgy_mode else "Risk Percentage (%)"
-                    risk_percentage = st.number_input(risk_pct_label, min_value=0.0, max_value=100.0, value=1.0, step=0.1, help="Percentage of account to risk per trade")
+                    risk_percentage = st.number_input("Risk Percentage (%)", min_value=0.0, max_value=100.0, value=1.0, step=0.1, help="Percentage of account to risk per trade")
                 else:
-                    risk_amt_label = "ヽ(´ー｀)ﾉ Risk Amount ($)" if edgy_mode else "Risk Amount ($)"
-                    risk_amount_input = st.number_input(risk_amt_label, min_value=0.0, value=100.0, step=10.0, help="Fixed dollar amount to risk per trade")
+                    risk_amount_input = st.number_input("Risk Amount ($)", min_value=0.0, value=100.0, step=10.0, help="Fixed dollar amount to risk per trade")
 
             with col2:
-                entry_label = "(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ Entry Price ($)" if edgy_mode else "Entry Price ($)"
-                entry_price = st.number_input(entry_label, min_value=0.0, value=100.0, step=0.1, help="Price at which you plan to enter the trade")
-                stop_label = "(╯‵□′)╯︵┻━┻ Stop Loss Price ($)" if edgy_mode else f"{emoji.emojize(':boom:')} Stop Loss Price ($)"
-                stop_loss = st.number_input(stop_label, min_value=0.0, value=95.0, step=0.1, help="Price at which you will exit if the trade goes against you")
+                entry_price = st.number_input("Entry Price ($)", min_value=0.0, value=100.0, step=0.1, help="Price at which you plan to enter the trade")
+                stop_loss = st.number_input("Stop Loss Price ($)", min_value=0.0, value=95.0, step=0.1, help="Price at which you will exit if the trade goes against you")
 
             submitted = st.form_submit_button("Calculate", type="primary")
 
