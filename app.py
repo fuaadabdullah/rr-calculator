@@ -108,7 +108,7 @@ st.markdown("""
     }
 
     /* Form styling */
-    .stForm {
+    .form-container {
         background: #f0f0f0;
         padding: 2rem;
         border-radius: 1rem;
@@ -118,7 +118,7 @@ st.markdown("""
     }
 
     /* Force label color */
-    .stForm .stText, .stForm label {
+    .form-container .stText, .form-container label {
         color: black !important;
     }
 
@@ -185,6 +185,7 @@ try:
 
     st.markdown("### 🦇 Risk-Reward Calculator")
 
+    st.markdown('<div class="form-container">', unsafe_allow_html=True)
     with st.form("rizzk_form"):
         # Add position type selector
         position_type = st.selectbox("Position Type", ["Long", "Short"], index=0)
@@ -206,6 +207,7 @@ try:
             stop_loss = st.number_input("Stop Loss Price ($)", min_value=0.0, value=95.0, step=0.1, help="Price at which you will exit if the trade goes against you")
 
         submitted = st.form_submit_button("Calculate", type="primary")
+    st.markdown('</div>', unsafe_allow_html=True)
 
     if submitted:
             # Input validation
