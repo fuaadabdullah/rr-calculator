@@ -261,6 +261,9 @@ try:
 
         with col1:
             account_size = st.number_input("Account Size ($)", min_value=0.0, value=10000.0, step=100.0, help="Total trading account balance")
+            # Initialize both variables with defaults
+            risk_percentage = 1.0
+            risk_amount_input = 100.0
             if risk_mode == "% of Account":
                 risk_percentage = st.number_input("Risk Percentage (%)", min_value=0.0, max_value=100.0, value=1.0, step=0.1, help="Percentage of account to risk per trade")
             else:
