@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - manual-pr-branch
   workflow_dispatch:
 
 env:
