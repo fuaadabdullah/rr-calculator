@@ -1,3 +1,7 @@
+---
+description: "AZURE_DEPLOYMENT"
+---
+
 # Azure App Service Deployment Guide for RIZZK Calculator
 
 ## Prerequisites ✅
@@ -40,7 +44,7 @@
 ### Step 3: Deploy the Application
 1. After the Web App is created, right-click on the **project folder** in VS Code Explorer:
    ```
-   /Users/fuaadabdullah/ForgeMonorepo/Fuaad's Portfolio/RIZZK-Calculator-Demo/risk_reward_calculator
+   /Users/fuaadabdullah/ForgeMonorepo/apps/python/rizzk-calculator/risk_reward_calculator
    ```
 2. Select **"Deploy to Web App..."**
 3. Choose the Web App you just created: `rizzk-calculator-demo`
@@ -145,7 +149,7 @@ az webapp config appsettings set \
     EDGY_MODE_DEFAULT=false
 
 # Deploy from local directory
-cd "/Users/fuaadabdullah/ForgeMonorepo/Fuaad's Portfolio/RIZZK-Calculator-Demo/risk_reward_calculator"
+cd "/Users/fuaadabdullah/ForgeMonorepo/apps/python/rizzk-calculator/risk_reward_calculator"
 az webapp up \
   --resource-group $RESOURCE_GROUP \
   --name $APP_NAME \

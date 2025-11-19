@@ -10,8 +10,7 @@
   <!-- Sidebar -->
   <rect x="0" y="80" width="200" height="520" fill="#f9fafb" stroke="#e5e7eb"/>
   <text x="100" y="110" text-anchor="middle" fill="#374151" font-size="14" font-weight="bold">About</text>
-  <text x="100" y="130" text-anchor="middle" fill="#6b7280" font-size="10">Fuaad — Builder, trader,</text>
-  <text x="100" y="145" text-anchor="middle" fill="#6b7280" font-size="10">& GoblinOS rep</text>
+  <text x="100" y="130" text-anchor="middle" fill="#6b7280" font-size="10">Fuaad — Builder & trader</text>
 
   <!-- Main Content Area -->
   <rect x="200" y="80" width="600" height="520" fill="#ffffff"/>

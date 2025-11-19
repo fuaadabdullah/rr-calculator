@@ -1,9 +1,12 @@
+---
+description: "README"
+---
+
 # RIZZK Calculator
 
 RIZZK Calculator (pronounced "Rizz-k") — sharp, refined position-sizing for traders who think in probabilities and move with style.
 
-Author: Fuaad Abdullah  
-Contact: [GoblinOSRep@gmail.com](mailto:GoblinOSRep@gmail.com)
+Author: Fuaad Abdullah
 
 Default UI: Polished emoji mode is the default. Use the sidebar "🦇 mode (ASCII emoticons)" toggle to switch to the ASCII-emoticon experience.
 
@@ -27,13 +30,13 @@ Not a signal service. Not financial advice. Just math with taste.
 
 ## Key Features
 
-- Position sizing from account size and risk %
-- Long and short support
-- 1:1 and 2:1 profit targets
-- Downloadable CSV of results
-- Calculation history stored in session
-- Input validation and clear feedback
-- Clean UI with charts and metrics
+- Position sizing from account size and risk % or fixed-dollar mode with inline validation
+- Long and short support with adaptive stop guidance
+- Always-visible live summary (position size, $ risk, % risk, R multiple)
+- Shareable URLs: inputs are encoded in query params for quick permalinks
+- 1:1 and 2:1 profit targets plus copy-to-clipboard helpers
+- Downloadable CSV and session-scoped calculation history
+- Clean UI with charts, responsive design, and branding trust cues (build version shown in footer)
 
 ## Local Development
 
@@ -48,33 +51,56 @@ streamlit run app.py
 
 Fill the inputs: account size, risk %, entry, stop. Hit Calculate. Export CSV if you want to log the trade.
 
-## Suggested Demo Flow (30-60 sec)
+## Alternative UI
 
-1. **Show defaults & explain risk %**: "Here we have a $10K account risking 1% per trade - that's disciplined $100 risk per position."
+For a different visual experience, run the demo version:
 
-2. **Flip from long to short**: "Watch how the calculator handles both directions - same $100 risk, but short position gives us 20 shares at $95 entry with $100 stop."
+```bash
+streamlit run demo_app.py
+```
 
-3. **Build history**: "Each calculation adds to session history - perfect for reviewing multiple trade ideas in one sitting."
+This provides an alternative interface with different styling and layout.
 
-4. **Download CSV**: "Export your trade plan as CSV for your journal or spreadsheet analysis."
+## Deployment
+
+Two easy paths:
+
+- Azure App Service (no container):
+  - Set runtime to Python 3.11
+  - Deploy this folder with `requirements.txt` present
+  - Startup command: `python -m streamlit run app.py --server.port 8000 --server.address 0.0.0.0`
+
+- Container (Azure Web App for Containers, ACI, ECS):
+  - Build using the Dockerfile in this directory as build context:
+
+    ```bash
+    docker build -t rizzk:latest .
+    docker run -p 8501:8501 rizzk:latest
+    ```
+
+  - Push to a registry (e.g., ACR) and point your service at the image
+
+Note: The app expects no secrets; `EDGY_MODE_DEFAULT` env can optionally be set to `true`/`false` to toggle the default UI mode.
 
 ## Testing
 
-Run unit tests with pytest:
+Unit tests live under `apps/python/rizzk-calculator/risk_reward_calculator/tests/test_rizzk_core.py` and exercise the pure calculation helpers (no Streamlit dependency).
 
 ```bash
-pip install -r requirements.txt
-pytest test_risk_reward.py -v
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt  # optional if you already have deps
+python -m unittest apps/python/rizzk-calculator/risk_reward_calculator/tests/test_rizzk_core.py
 ```
 
-All core calculation logic is thoroughly unit-tested with comprehensive edge case coverage, including extreme sanity checks with tiny accounts and microscopic risks to ensure safety-first reliability.
+The suite asserts correct sizing math for both risk modes, validates percentage move helpers, and checks error handling for invalid trades.
 
 ## Tech
 
 - Python 3.11
 - Streamlit
 - Pandas
-- Pytest (unit testing)
+- Python’s unittest (core calculation tests)
 
 ## Engineering Approach
 

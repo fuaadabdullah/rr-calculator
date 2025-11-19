@@ -1,3 +1,7 @@
+---
+description: "MANUAL_DEPLOYMENT"
+---
+
 # 🚀 RIZZK Calculator - Manual Azure Deployment Guide
 
 ## ⚠️ Azure CLI Installation Failed Due to Disk Space
@@ -76,7 +80,7 @@ Since Azure CLI can't be installed due to disk space constraints, we'll deploy m
 2. Use an FTP client (like FileZilla) or VS Code FTP extension
 3. Upload all files from:
    ```
-   /Users/fuaadabdullah/ForgeMonorepo/Fuaad's Portfolio/RIZZK-Calculator-Demo/risk_reward_calculator/
+   /Users/fuaadabdullah/ForgeMonorepo/apps/python/rizzk-calculator/risk_reward_calculator/
    ```
 4. To the FTP root directory
 

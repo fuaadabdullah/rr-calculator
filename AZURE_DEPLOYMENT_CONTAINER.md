@@ -1,3 +1,7 @@
+---
+description: "AZURE_DEPLOYMENT_CONTAINER"
+---
+
 # Azure Deployment (Web App for Containers)
 
 This guide deploys the Streamlit app as a Linux container from Docker Hub.
