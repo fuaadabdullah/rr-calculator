@@ -6,12 +6,21 @@ RIZZK is a focused Streamlit application built around deterministic risk-calcula
 
 ## Main components
 
-- `app.py`: UI and interaction flow
-- `rizzk_core.py`: core calculation logic
-- `test_risk_reward.py`: automated tests for edge cases and correctness
+- `app.py`: Streamlit UI, form handling, metric rendering, chart output, and history state.
+- `rizzk_core.py`: centralized calculation logic for position sizing and risk/reward math.
+- `test_risk_reward.py`: validation of core calculation correctness and edge behavior.
+- `assets/`: static media used in docs/README.
 
-## Design principles
+## Calculation flow
 
-- Keep math logic isolated from UI rendering
-- Validate all inputs before calculations
-- Keep output explicit and journal-ready
+1. User enters account size, entry, stop loss, and risk mode.
+2. UI validates inputs and forwards values to `rizzk_core.py`.
+3. Core function returns sizing outputs, risk amount, and profit targets.
+4. UI renders metrics, percentage moves, and chart visualizations.
+5. Session history stores prior runs for quick comparison.
+
+## Deployment topology
+
+- Primary host target: Streamlit Community Cloud.
+- Local run path: `streamlit run app.py`.
+- Runtime dependencies are intentionally minimal for quick startup.

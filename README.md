@@ -6,6 +6,12 @@ Canonical repository for RIZZK Calculator, a production-focused risk and positio
 
 RIZZK helps traders calculate position size, risk dollars, and risk/reward outcomes using disciplined, repeatable math.
 
+## Screenshots
+
+![RIZZK calculator hero](docs/images/hero.webp)
+![Calculated results and metric dashboard](docs/images/feature-01.webp)
+![Alternative risk-mode scenario](docs/images/feature-02.webp)
+
 ## Core features
 
 - Position sizing from account size and risk constraints
@@ -19,6 +25,7 @@ RIZZK helps traders calculate position size, risk dollars, and risk/reward outco
 - Python
 - Streamlit
 - Pandas
+- Plotly
 - Pytest
 
 ## Quickstart
